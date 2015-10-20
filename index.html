@@ -1,0 +1,545 @@
+<!--
+Based on the Google IO 2012/2013 HTML5 Slide Template
+URL: https://code.google.com/p/io-2012-slides
+
+Author: Andrea Scarpino <me@andreascarpino.it>
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="theme/css/phone.css">
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="js/slides" src="js/require-1.0.8.min.js"></script>
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/terminal.png"></aside>
+    <!-- The content of this hgroup is replaced programmatically through the slide_config.js. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.js --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.js --></h2>
+      <p data-config-presenter><!-- populated from slide_config.js --></p>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Cos'&egrave; la shell</h2>
+    </hgroup>
+    <article>
+      <p>In un sistema operativo, una shell (o terminale) &egrave; un programma che permette agli utenti di
+      comunicare con il sistema e di avviare altri programmi. &Egrave; una delle componenti principali di un
+      sistema operativo, insieme al kernel.</p>
+      <br/>
+      <br/>
+      <ul class="build">
+        <li>La shell &egrave; un interprete di comandi</li>
+        <li>Linguaggio di programmazione semplice e completo</li>
+        <li>Ideale per automatizzare i lavori ripetitivi e di routine</li>
+        <li>Portabilit&agrave; degli script su dufferenti sistemi UNIX</li>
+        <li>Personalizzabile; permette agli utenti di modificare l'ambiente</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Bourne-Again SHell</h2>
+    </hgroup>
+    <article>
+      <br />
+      <br />
+      <br />
+      <p>Scritta da <em>Bourne</em> per rimpiazzare Bourne Shell (conosciuta come <strong>sh</strong>), integra
+      caratteristiche di <strong>sh</strong>, <strong>csh</strong> e <strong>ksh</strong>.
+      <br />
+      <br />
+      <br />
+      <p>Bash &egrave; lo standard <em>de facto</em> dello scripting di shell su ogni variante <strong>UNIX</strong>
+      (OS X, Cygwin e Linux).</p>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Cos'&egrave; uno script</h2>
+    </hgroup>
+    <article>
+      <p>Nel caso pi&ugrave; semplice uno script non &egrave; altro che una lista di comandi da eseguire in sequenza.</p>
+      <br/>
+      <pre class="prettyprint" data-lang="shell">
+      <b>#!/bin/bash</b>
+
+      cd /var/log
+      cat /dev/null &gt; btmp
+      cat /dev/null &gt; wtmp
+      echo "Log cancellati"
+      </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Eseguire uno script</h2>
+    </hgroup>
+    <article>
+      <p>&Egrave; possibile eseguire uno script invocandolo tramite:</p>
+      <ul>
+        <li><pre>$ sh nome-file-script</pre></li>
+        <li><pre>$ bash nome-file-script</pre></li>
+      </ul>
+      <ul class="build">
+        <li><p>Oppure, &egrave; possibile assegnare i permessi di esecuzione a tale script:</p>
+        <pre>$ chmod +x nome-file-script
+$ ./nome-file-script</pre></li>
+      </ul>
+      <ul class="build">
+        <li><p>&Egrave; anche possibile spostare tale script in <em>/usr/local/bin</em> e invocarlo scrivendo
+        <pre>$ nome-file-script</pre>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Variabili</h2>
+    </hgroup>
+    <article>
+      <p>Le variabili possono essere dichiarate in qualsiasi parte dello script.
+      Si accede al valore di una variabile anteponendo il simbolo <strong>$</strong> al suo nome.</p>
+      <pre class="prettyprint" data-lang="shell">$ variabile='sono una variabile'
+$ echo variabile
+variabile
+$ echo $variabile
+sono una variabile
+</pre>
+      <p>&Egrave; possibile includere il valore di una variabile all'interno di un'altra utilizzando i doppi
+      apici (<em>quoting debole</em>).</p>
+      <pre class="prettyprint" data-lang="shell">$ quoting_debole="$variabile"
+$ echo $quoting_debole
+sono una variabile
+$ quoting_forte='$variabile'
+$ echo $quoting_forte
+$variabile
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Variabili (continua)</h2>
+    </hgroup>
+    <article>
+      <p>In Bash le variabili non sono tipizzate; possono cio&egrave; contenere sia solo caratteri, sia solo
+      numeri, sia entrambi.</p>
+      <p>&Egrave; possibile eseguire delle operazioni artimetiche nel caso in cui contengano solo numeri.</p>
+      <pre class="prettyprint" data-lang="shell">$ mista="1a"
+$ let "mista += 1"
+$ echo $mista
+1</pre>
+      <pre class="prettyprint" data-lang="shell">$ solo_numeri="1"
+$ let "solo_numeri += 1"
+$ echo $solo_numeri
+2</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Array</h2>
+    </hgroup>
+    <article>
+      <p>Bash supporta gli array e offre gli operatori pi&ugrave; comuni per manipolarli.</p>
+      <pre>$ array=(primo secondo terzo)</pre>
+      <ul>
+        <li><pre>$ echo $array
+primo secondo terzo</pre></li>
+      </ul>
+      <ul class="build">
+        <li><pre>$ echo ${array[1]}
+primo</pre></li>
+        <li><pre>$ echo ${#array[@]}
+3</pre></li>
+        <li><pre>$ echo ${#array[1]}
+5</pre></li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Array (continua)</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li><pre>$ echo ${array:1}
+secondo terzo</pre></li>
+      </ul>
+      <ul class="build">
+        <li><pre>$ echo ${array:1:1}
+secondo</pre></li>
+        <li><pre>$ array2="quattro cinque"
+$ concat=(${array[@]} ${array2[@]})
+$ echo $concat
+uno due tre quattro cinque
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Operazioni sulle stringhe</h2>
+    </hgroup>
+    <article>
+      <pre>$ stringa="1 stringa"</pre>
+      <ul class="build">
+        <li><pre>$ echo ${#stringa}
+9</pre></li>
+        <li><pre>$ echo ${stringa:2:6}
+string</pre></li>
+        <li><pre>$ echo ${stringa%[a-z]*}
+1 string
+$ echo ${stringa%%[a-z]*}
+1</pre></li>
+        <li><pre>$ echo ${stringa#[1-9]*}
+ stringa
+</pre></li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Operazioni sulle stringhe (continua)</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li><pre>$ echo ${stringa/1/2}
+2 stringa</pre></li>
+      </ul>
+      <ul class="build">
+        <li><pre>$ echo ${${stringa/1/2}/a/he}
+2 stringhe</pre></li>
+        <li><pre>$ echo $(expr index "$var" str)
+3</pre>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Costrutti di test</h2>
+    </hgroup>
+    <article>
+      <p>I costrutti di tipo <em>if</em> sono supportati e controllano l'<em>exit status</em> di un
+      comando UNIX.</p>
+      <pre class="prettyprint" data-lang="shell">if [ $var1 = $var2 ]
+then
+  echo "sono uguali"
+else
+  echo "non sono uguali"
+fi</pre>
+      <p>Bash mette a disposizione degli operatori per le operazioni pi&ugrave; comuni:</p>
+      <ul>
+        <li><pre>if [ -e file ]</pre></li>
+        <li><pre>if [ ! -d file ]</pre></li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Cicli</h2>
+    </hgroup>
+    <article>
+      <p>Bash supporta cicli <em>for</em>, <em>while</em> e <em>until</em>.</p>
+      <pre class="prettyprint" data-lang="shell">for elemento in ${array}
+do
+  echo $elemento
+done</pre>
+      <pre class="prettyprint" data-lang="shell">while [ "${array[2]" = "secondo" ]
+do
+  array[2]="era secondo"
+done</pre>
+      <pre class="prettyprint" data-lang="shell">until [ "${array[2]" = "era secondo" ]
+do
+  array[2]="secondo"
+done</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Cicli (continua)</h2>
+    </hgroup>
+    <article>
+      <p>Sono supportati anche <em>break</em> e <em>continue</em>. Questi hanno lo stesso effetto
+      che hanno nei comuni linguaggi di programmazione, ma accettano anche un parametro numerico
+      che estende il loro effetto ad altri possibili N cicli padri.</p>
+      <pre class="prettyprint" data-lang="shell">for numero in 1 2 3
+do
+  echo $numero
+  for numero_figlio in 4 5 6
+  do
+    echo $numero_figlio
+    if [ $numero_figlio = 5 ]
+    then
+      break 2
+    fi
+  done
+done</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Funzioni</h2>
+    </hgroup>
+    <article>
+      <p>&Egrave; possibile dichiarare delle funzioni per non duplicare il codice.</p>
+      <p>Non bisogna specificare nella firma il numero di parametri che prende in input
+      tale funzione.</p>
+      <pre class="prettyprint" data-lang="shell">function funzione {
+  echo "Parametro uno: $1"
+  echo "Parametro due: $2"
+  echo "Parametro tre: $3"
+}</pre>
+      <p>Una chiamata di una funzione &egrave; equivalente a quella di un comando.</p>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Input e Output</h2>
+    </hgroup>
+    <article>
+      <p>Esistono 3 flussi di dati: <em>stdin</em>, <em>stdout</em> e <em>stderr</em>.
+      In Bash sono gestiti rispettivamente dai descrittori 0, 1 e 2.</p>
+      <p>I caratteri &lt;, &lt;&lt;, &gt;, &gt;&gt; possono essere combinati con i
+      descrittori per reindirizzare l'input, l'output o i messaggi d'errore ad un file.</p>
+      <p>Il carattere &amp; reindirizza sia stdout che stderr ad un file, ma pu&ograve;
+      anche reindirizzare l'output di un descrittore ad un altro.</p>
+      <pre class="prettyprint" data-lang="shell">while [ true ]
+do
+  uptime 2&gt; errori.log
+  sleep 60
+done</pre>
+      <pre>$ date &amp;&gt; input_e_output.log</pre>
+      <pre>$ date 2&gt;&amp;1</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>I fondamentali</h2>
+    </hgroup>
+    <article>
+      <p>Per realizzare uno script &egrave; necessario conoscere comandi indispensabili come:</p>
+      <ul>
+        <li><strong>sed</strong> - stream editor for filtering and transforming text</li>
+        <li><strong>awk</strong> - pattern scanning and processing language</li>
+        <li><strong>grep</strong>, egrep, fgrep - print lines matching a pattern</li>
+        <li><strong>cat</strong> - concatenate files and print on the standard output</li>
+        <li><strong>cut</strong> - remove sections from each line of files</li>
+        <li><strong>tail</strong> - output the last part of files</li>
+        <li><strong>head</strong> - output the first part of files</li>
+        <li><strong>xargs</strong> - build and execute command lines from standard input</li>
+        <li><strong>sort</strong> - sort lines of text files</li>
+      </ul>
+      <p>In ambienti UNIX ogni comando offre una lista dei parametri disponibili che permettono
+      di modificare il suo comportamento. &Egrave; possibile esplorare tale lista invocando un comando
+      seguito dal termine <em>--help</em> oppure &egrave; possibile visualizzare la documentazione di
+      tale comando anteponendo il termine <em>man</em>.
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>I fondamentali (continua)</h2>
+    </hgroup>
+    <article>
+      <p>Ci sono poi comandi che permettono l'interazione col sistema operativo come:</p>
+      <ul>
+        <li><strong>cd</strong> - change the working directory</li>
+        <li><strong>ls</strong> - list directory contents</li>
+        <li><strong>pwd</strong> - print name of current/working directory</li>
+        <li><strong>pushd, popd, dirs</strong> - bookmarking working directories</li>
+        <li><strong>date</strong> - print or set the system date and time</li>
+        <li><strong>uptime</strong> - tell how long the system has been running</li>
+        <li><strong>w</strong> - show who is logged on and what they are doing</li>
+        <li><strong>whoami</strong> - print effective userid</li>
+        <li><strong>find</strong> - search for files in a directory hierarchy</li>
+        <li><strong>wget</strong> - the non-interactive network downloader</li>
+        <li><strong>rm</strong> - remove files or directories</li>
+        <li><strong>tar</strong> - manipulate tape archives</li>
+        <li>...</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Backup di una cartella</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li><pre class="prettyprint" data-lang="shell">#!/bin/bash
+
+tar -acf Documenti-backup.tar.gz Documenti/</pre></li>
+      </ul>
+      <ul class="build">
+        <li><pre class="prettyprint" data-lang="shell">#!/bin/bash
+
+rm Documenti-backup.tar.gz
+tar -acf Documenti-backup.tar.gz Documenti/</pre></li>
+        <li><pre class="prettyprint" data-lang="shell">#!/bin/bash
+
+rm Documenti-backup 2&gt; /dev/null
+tar -acf Documenti-backup.tar.gz Documenti/</pre></li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Backup di una cartella (continua)</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li><pre class="prettyprint" data-lang="shell">#!/bin/bash
+
+if [ -f Documenti-backup.tar.gz ]; then
+  rm Documenti-backup.tar.gz
+fi
+if [ -d Documenti ]; then
+  tar -acf Documenti-backup.tar.gz Documenti/
+fi</pre></li>
+      </ul>
+      <ul class="build">
+        <li><pre class="prettyprint" data-lang="shell">#!/bin/bash
+
+backup="${1}.tar.gz"
+dir="${1}"
+if [ -f "$backup" ]; then
+  rm "$backup"
+fi
+if [ -d "$dir" ]; then
+  tar -acf "$backup" "$dir"
+fi</pre></li>
+        <li><pre class="prettyprint" data-lang="shell">#!/bin/bash
+
+backup="${1}-$(date +%Y-%m-%d_%H-%M).tar.gz"
+dir="${1}"
+if [ -f "$backup" ]; then
+  rm "$backup"
+fi
+if [ -d "$dir" ]; then
+  tar -acf "$backup" "$dir"
+fi</pre></li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Backup di una cartella (continua)</h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="shell">#!/bin/bash
+
+function usage {
+  echo "Usage: ${0} <directory>"
+  exit 1
+}
+
+if [ $# -eq 0 ]; then
+  usage
+fi
+
+backup="${1}-$(date +%Y-%m-%d_%H-%M).tar.gz"
+dir="${1}"
+if [ -f "$backup" ]; then
+  rm "$backup"
+fi
+if [ -d "$dir" ]; then
+  tar -acf "$backup" "$dir"
+fi</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Estrarre l'audio da un video su Youtube</h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="shell">#!/bin/bash
+function usage {
+  echo "Usage: ${0} &lgt;youtube video url&gt;"; exit 1
+}
+
+[ $# -eq 0 ] &amp;&amp; usage
+
+url="${1}"
+youtubedl="/usr/bin/youtube-dl"
+ytargs="-c"
+video="${youtubedl} ${url} --get-filename}"
+title="${youtubedl} ${url} --get-title}"
+
+ffmpeg="/usr/bin/ffmpeg"
+ffargs="-i \"${video}\" -acodec libmp3lame -metadata title=\"${title}\" \"${title}\".mp3"
+
+cd /tmp
+${youtubedl} "${ytargs}" "${url}" || exit 1
+${ffmpeg} "${ffargs}" || exit 1
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Riferimenti</h2>
+    </hgroup>
+    <article>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <ul>
+        <li><a href="http://tldp.org/LDP/abs/html/">Advanced Bash-Scripting Guide</a></li>
+        <li>man pages</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="thank-you-slide segue nobackground">
+    <img src="images/qrcode.png">
+    <aside class="gdbar right"><img src="images/terminal.png"></aside>
+    <p class="auto-fadein" data-config-contact>
+      <!-- populated from slide_config.js -->
+    </p>
+  </slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
